@@ -21,42 +21,212 @@
  // COSAS QUE HAY QUE AÑADIR
  // para enteros y reales modificaarlo para que no pete cuando metes un numero muy grande --> que aparezca e
  // Letras minúsculas
- // Caracteres especiales "" ' / () = [] + * {} , ; . : - _ <> ^
+ // Caracteres especiales / () [] {}   <> ^
  // espacio en blanco, tabuladores y salto de línea
 
-
+ // CUIDADO CON EL = TENEMOS QUE TENER UNO DE CREACIÓN DE TIPO
 
 falsoDR	(?i:falso)
+constDR (?i:const)
 fconstDR (?i:fconst)
+accionDR (?i:accion)
+algoritmoDR (?i:algoritmo)
+booleanoDR (?i:booleano)
+cadenaDR (?i:cadena)
+caracterDR (?i:caracter)
+continuarDR (?i:continuar)
+deDR (?i:de)
+devDR (?i:dev)
+divDR (?i:div)
+entDR (?i:ent)
+enteroDR (?i:entero)
+entSalDR (?i:e\/s)
+faccionDR (?i:faccion)
+falgoritmoDR (?i:falgoritmo)
+ffuncionDR (?i:ffuncion)
+fmientrasDR (?i:fmientras)
+fparaDR (?i:fpara)
+fsiDR (?i:fsi)
+ftipoDR (?i:ftipo)
+ftuplaDR (?i:ftupla)
+funcionDR (?i:funcion)
+fvarDR (?i:fvar)
+hacerDR (?i:hacer)
+hastaDR (?i:hasta)
+mientrasDR (?i:mientras)
+modDR (?i:mod)
+noDR (?i:no)
+oDR (?i:o)
+paraDR (?i:para)
+realDR (?i:real)
+refDR (?i:ref)
+salDR (?i:sal)
+siDR (?i:si)
+tablaDR (?i:tabla)
+tipoDR (?i:tipo)
+tuplaDR (?i:tupla)
+varDR (?i:var)
+verdaderoDR	(?i:verdadero)
+yDR (?i:y)
+
+
 literalCaracterDR	\".\"
 literalEnteroDR	[+-]?[0-9]+
 literalRealDR	{literalEnteroDR}[rR]
 puntoYComaDR	;
 dosPuntosDR :
-verdaderoDR	(?i:verdadero)
+
 
 %%
 
-(?i:const)	{
+{constDR}	{
 	printf("(constTK, )\n");
 }
 {falsoDR}	{
 	printf("(literalBooleanoTK, falso)\n");
 }
+{verdaderoDR}	{
+	printf("(literalBooleanoTK, verdadero)\n");
+}
 {fconstDR}	{
 	printf("(fconstTK, )\n");
 }
+{accionDR}	{
+	printf("(accionTK, )\n");
+}
+{algoritmoDR}	{
+	printf("(algoritmoTK, )\n");
+}
+{booleanoDR}	{
+	printf("(booleanoTK, )\n");
+}
+{cadenaDR}	{
+	printf("(cadenaTK, )\n");
+}
+{caracterDR}	{
+	printf("(caracterTK, )\n");
+}
+{continuarDR}	{
+	printf("(continuarTK, )\n");
+}
+{deDR}	{
+	printf("(deTK, )\n");
+}
+{devDR}	{
+	printf("(devTK, )\n");
+}
+{divDR}	{
+	printf("(divTK, )\n");
+}
+{entDR}	{
+	printf("(entTK, )\n");
+}
+{enteroDR}	{
+	printf("(enteroTK, )\n");
+}
+{entSalDR}	{
+	printf("(entSalTK, )\n");
+}
+{faccionDR}	{
+	printf("(faccionTK, )\n");
+}
+{falgoritmoDR}	{
+	printf("(falgoritmoTK, )\n");
+}
+{ffuncionDR}	{
+	printf("(ffuncionTK, )\n");
+}
+{fmientrasDR}	{
+	printf("(fmientrasTK, )\n");
+}
+{fparaDR}	{
+	printf("(fparaTK, )\n");
+}
+{fsiDR}	{
+	printf("(fsiTK, )\n");
+}
+{ftipoDR}	{
+	printf("(ftipoTK, )\n");
+}
+{ftuplaDR}	{
+	printf("(ftuplaTK, )\n");
+}
+{funcionDR}	{
+	printf("(funcionTK, )\n");
+}
+{fvarDR}	{
+	printf("(fvarTK, )\n");
+}
+{hacerDR}	{
+	printf("(hacerTK, )\n");
+}
+{hastaDR}	{
+	printf("(hastaTK, )\n");
+}
+{mientrasDR}	{
+	printf("(mientrasTK, )\n");
+}
+{modDR}	{
+	printf("(modTK, )\n");
+}
+{noDR}	{
+	printf("(noTK, )\n");
+}
+{oDR}	{
+	printf("(oTK, )\n");
+}
+{paraDR}	{
+	printf("(paraTK, )\n");
+}
+{realDR}	{
+	printf("(realTK, )\n");
+}
+{refDR}	{
+	printf("(refTK, )\n");
+}
+{salDR}	{
+	printf("(salTK, )\n");
+}
+{siDR}	{
+	printf("(siTK, )\n");
+}
+{tablaDR}	{
+	printf("(tablaTK, )\n");
+}
+{tipoDR}	{
+	printf("(tipoTK, )\n");
+}
+{tuplaDR}	{
+	printf("(tuplaTK, )\n");
+}
+{varDR}	{
+	printf("(varTK, )\n");
+}
+{yDR}	{
+	printf("(yTK, )\n");
+}
+
+
 =	{
 	printf("(igualTK, )\n");
 }
-'([^']|\/')*'	{
-	printf("(literalCadenaTK, %s)\n", yytext);
-}
+'	{	printf("(comillaSimpleTK, ) \n");	}
+\".\"	{	printf("(comillaDobleTK, ) \n");	}
+
 {literalCaracterDR}	{
 	printf("(literalCaracterTK, %c)\n", yytext[1]);
 }
 {literalEnteroDR}	{
 	printf("(literalEnteroTK, %d)\n", atoi(yytext));
+}
+-	{
+	printf("(guionTK, )\n");
+}
++	{
+	printf("(operadorSumaTK, )\n");
+}
+"*"	{
+	printf("(operadorProductoTK, )\n");
 }
 [+-]?[0-9]*(\.[0-9]+)?([eE][+-]?[0-9]+)?	{
 	printf("(literalRealTK, %f)\n", atof(yytext));
@@ -77,14 +247,19 @@ verdaderoDR	(?i:verdadero)
 	printf("(puntoYComaTK, )\n");
 }
 {dosPuntosDR}   {
-    printf("(dosPuntosDR, )\n");
+    printf("(dosPuntosTK, )\n");
 }
 \.   {
-    printf("(puntoDR, )\n");
+    printf("(puntoTK, )\n");
 }
-{verdaderoDR}	{
-	printf("(literalBooleanoTK, verdadero)\n");
+\,	{
+	printf("(comaTK, )\n");
 }
+\/	{
+	printf("(barraTK, )\n");
+}
+
+
 .	{ //Permite que el resto de caracteres no hagan echo
 }
 
