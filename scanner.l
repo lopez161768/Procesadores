@@ -69,202 +69,144 @@ varDR (?i:var)
 verdaderoDR	(?i:verdadero)
 yDR (?i:y)
 
+igualDR	=
 
 literalCaracterDR	\".\"
+literalCadenaDR	'([^']|\/')*'
+
 literalEnteroDR	[+-]?[0-9]+
-literalRealDR	{literalEnteroDR}[rR]
+literalRealDR	{literalEnteroDR}[rR]|[+-]?[0-9]+\.[0-9]+([eE][+-]?[0-9]+)?
+
+letraDR             [a-zA-Z]
+cifraDR             [0-9]
+letra_o_cifraDR     [a-zA-Z0-9_]
+identificadorDR     {letraDR}{letra_o_cifraDR}*
+
 puntoYComaDR	;
 dosPuntosDR :
-
+puntoDR	\.
+comaDR \,
+barraDR	\/
+operadorDistintoDR	"<>"
+siNoDR	"[]"
+operadorMayorIgualDR	">="
+operadorMenorIgualDR	"<="
+operadorMenorDR	"<"
+operadorMayorDR	">"
+corcheteAbiertoDR	"["
+corcheteCerradoDR	"]"
+parentesisAbiertoDR	"("
+parentesisCerradoDR	")"
 
 %%
 
-{constDR}	{
-	printf("(constTK, )\n");
-}
-{falsoDR}	{
-	printf("(literalBooleanoTK, falso)\n");
-}
-{verdaderoDR}	{
-	printf("(literalBooleanoTK, verdadero)\n");
-}
-{fconstDR}	{
-	printf("(fconstTK, )\n");
-}
-{accionDR}	{
-	printf("(accionTK, )\n");
-}
-{algoritmoDR}	{
-	printf("(algoritmoTK, )\n");
-}
-{booleanoDR}	{
-	printf("(booleanoTK, )\n");
-}
-{cadenaDR}	{
-	printf("(cadenaTK, )\n");
-}
-{caracterDR}	{
-	printf("(caracterTK, )\n");
-}
-{continuarDR}	{
-	printf("(continuarTK, )\n");
-}
-{deDR}	{
-	printf("(deTK, )\n");
-}
-{devDR}	{
-	printf("(devTK, )\n");
-}
-{divDR}	{
-	printf("(divTK, )\n");
-}
-{entDR}	{
-	printf("(entTK, )\n");
-}
-{enteroDR}	{
-	printf("(enteroTK, )\n");
-}
-{entSalDR}	{
-	printf("(entSalTK, )\n");
-}
-{faccionDR}	{
-	printf("(faccionTK, )\n");
-}
-{falgoritmoDR}	{
-	printf("(falgoritmoTK, )\n");
-}
-{ffuncionDR}	{
-	printf("(ffuncionTK, )\n");
-}
-{fmientrasDR}	{
-	printf("(fmientrasTK, )\n");
-}
-{fparaDR}	{
-	printf("(fparaTK, )\n");
-}
-{fsiDR}	{
-	printf("(fsiTK, )\n");
-}
-{ftipoDR}	{
-	printf("(ftipoTK, )\n");
-}
-{ftuplaDR}	{
-	printf("(ftuplaTK, )\n");
-}
-{funcionDR}	{
-	printf("(funcionTK, )\n");
-}
-{fvarDR}	{
-	printf("(fvarTK, )\n");
-}
-{hacerDR}	{
-	printf("(hacerTK, )\n");
-}
-{hastaDR}	{
-	printf("(hastaTK, )\n");
-}
-{mientrasDR}	{
-	printf("(mientrasTK, )\n");
-}
-{modDR}	{
-	printf("(modTK, )\n");
-}
-{noDR}	{
-	printf("(noTK, )\n");
-}
-{oDR}	{
-	printf("(oTK, )\n");
-}
-{paraDR}	{
-	printf("(paraTK, )\n");
-}
-{realDR}	{
-	printf("(realTK, )\n");
-}
-{refDR}	{
-	printf("(refTK, )\n");
-}
-{salDR}	{
-	printf("(salTK, )\n");
-}
-{siDR}	{
-	printf("(siTK, )\n");
-}
-{tablaDR}	{
-	printf("(tablaTK, )\n");
-}
-{tipoDR}	{
-	printf("(tipoTK, )\n");
-}
-{tuplaDR}	{
-	printf("(tuplaTK, )\n");
-}
-{varDR}	{
-	printf("(varTK, )\n");
-}
-{yDR}	{
-	printf("(yTK, )\n");
-}
+{constDR}	{	printf("(constTK, )\n");	}
+{falsoDR}	{	printf("(literalBooleanoTK, falso)\n");	}
+{verdaderoDR}	{	printf("(literalBooleanoTK, verdadero)\n");	}
+{fconstDR}	{	printf("(fconstTK, )\n");	}
+{accionDR}	{	printf("(accionTK, )\n");	}
+{algoritmoDR}	{	printf("(algoritmoTK, )\n");	}
+{booleanoDR}	{	printf("(booleanoTK, )\n");	}
+{cadenaDR}	{	printf("(cadenaTK, )\n");	}
+{caracterDR}	{	printf("(caracterTK, )\n");	}
+{continuarDR}	{	printf("(continuarTK, )\n");	}
+{deDR}	{	printf("(deTK, )\n");	}
+{devDR}	{	printf("(devTK, )\n");	}
+{divDR}	{	printf("(divTK, )\n");	}
+{entDR}	{	printf("(entTK, )\n");	}
+{enteroDR}	{	printf("(enteroTK, )\n");	}
+{entSalDR}	{	printf("(entSalTK, )\n");	}
+{faccionDR}	{	printf("(faccionTK, )\n");	}
+{falgoritmoDR}	{	printf("(falgoritmoTK, )\n");	}
+{ffuncionDR}	{	printf("(ffuncionTK, )\n");	}
+{fmientrasDR}	{	printf("(fmientrasTK, )\n");	}
+{fparaDR}	{	printf("(fparaTK, )\n");	}
+{fsiDR}	{	printf("(fsiTK, )\n");	}
+{ftipoDR}	{	printf("(ftipoTK, )\n");	}
+{ftuplaDR}	{	printf("(ftuplaTK, )\n");	}
+{funcionDR}	{	printf("(funcionTK, )\n");	}
+{fvarDR}	{	printf("(fvarTK, )\n");	}
+{hacerDR}	{	printf("(hacerTK, )\n");	}
+{hastaDR}	{	printf("(hastaTK, )\n");	}
+{mientrasDR}	{	printf("(mientrasTK, )\n");	}
+{modDR}	{	printf("(modTK, )\n");	}
+{noDR}	{	printf("(noTK, )\n");	}
+{oDR}	{	printf("(oTK, )\n");	}
+{paraDR}	{	printf("(paraTK, )\n");	}
+{realDR}	{	printf("(realTK, )\n");	}
+{refDR}	{	printf("(refTK, )\n");	}
+{salDR}	{	printf("(salTK, )\n");	}
+{siDR}	{	printf("(siTK, )\n");	}
+{tablaDR}	{	printf("(tablaTK, )\n");	}
+{tipoDR}	{	printf("(tipoTK, )\n");	}
+{tuplaDR}	{	printf("(tuplaTK, )\n");	}
+{varDR}	{	printf("(varTK, )\n");	}
+{yDR}	{	printf("(yTK, )\n");	}
 
 
-=	{
+{igualDR}	{
 	printf("(igualTK, )\n");
 }
-'	{	printf("(comillaSimpleTK, ) \n");	}
-\".\"	{	printf("(comillaDobleTK, ) \n");	}
+
+-	{	printf("(guionTK, )\n");	}
+\+	{	printf("(operadorSumaTK, )\n");	}
+"*"	{	printf("(operadorProductoTK, )\n");	}
+
+{literalCadenaDR}	{
+	printf("(literalCadenaTK, %.*s)\n", yyleng - 2, yytext + 1);
+}
 
 {literalCaracterDR}	{
 	printf("(literalCaracterTK, %c)\n", yytext[1]);
 }
 {literalEnteroDR}	{
-	printf("(literalEnteroTK, %d)\n", atoi(yytext));
-}
--	{
-	printf("(guionTK, )\n");
-}
-+	{
-	printf("(operadorSumaTK, )\n");
-}
-"*"	{
-	printf("(operadorProductoTK, )\n");
-}
-[+-]?[0-9]*(\.[0-9]+)?([eE][+-]?[0-9]+)?	{
-	printf("(literalRealTK, %f)\n", atof(yytext));
+	printf("(literalEnteroTK, %lld)\n", atoll(yytext));
 }
 {literalRealDR}	{
-	char * cadena;
-	if ((cadena = strndup(yytext, strlen(yytext)-1)) == NULL)
-		errorEnScanner("No hay memoria para strndup() al leer %s\n", yytext);
-	else {
-		printf("(literalRealTK, %f)\n", atof(cadena));
-		free(cadena); //Para no sobrecargar la memoria
-	}
+	if (yytext[yyleng-1] == 'r' || yytext[yyleng-1] == 'R') {
+        char * cadena;
+        if ((cadena = strndup(yytext, yyleng - 1)) == NULL)
+            errorEnScanner("No hay memoria para strndup() al leer %s\n", yytext);
+        else {
+            printf("(literalRealTK, %f)\n", atof(cadena));
+            free(cadena);
+        }
+    } else {
+        printf("(literalRealTK, %f)\n", atof(yytext));
+    }
 }
+
 [A-Z][A-Z_]*	{
 	printf("(nombreConstanteTK, %s)\n", yytext);
 }
-{puntoYComaDR}	{
-	printf("(puntoYComaTK, )\n");
-}
-{dosPuntosDR}   {
-    printf("(dosPuntosTK, )\n");
-}
-\.   {
-    printf("(puntoTK, )\n");
-}
-\,	{
-	printf("(comaTK, )\n");
-}
-\/	{
-	printf("(barraTK, )\n");
-}
 
+{identificadorDR} { printf("(identificadorTK, %s)\n", yytext); }
+
+
+{puntoYComaDR}	{	printf("(puntoYComaTK, )\n");	}
+{dosPuntosDR}   {    printf("(dosPuntosTK, )\n");	}
+{puntoDR}   {    printf("(puntoTK, )\n");	}
+{comaDR}	{	printf("(comaTK, )\n");	}
+{barraDR}	{	printf("(barraTK, )\n");	}
+
+{operadorDistintoDR}	{ printf("(operadorDistintoTK, )\n"); }
+{siNoDR}    { printf("(siNoTK, )\n"); }
+{operadorMayorIgualDR}    { printf("(operadorMayorIgualTK, )\n"); }
+{operadorMenorIgualDR}    { printf("(operadorMenorIgualTK, )\n"); }
+
+{operadorMenorDR}     { printf("(operadorMenorTK, )\n"); }
+{operadorMayorDR}     { printf("(operadorMayorTK, )\n"); }
+{corcheteAbiertoDR}     { printf("(corcheteAbiertoTK, )\n"); }
+{corcheteCerradoDR}     { printf("(corcheteCerradoTK, )\n"); }
+{parentesisAbiertoDR}     { printf("(parentesisAbiertoTK, )\n"); }
+{parentesisCerradoDR}     { printf("(parentesisCerradoTK, )\n"); }
+
+[ \t\n\r]+             /* Ignorar espacios en blanco, tabuladores y saltos de línea */ ;
 
 .	{ //Permite que el resto de caracteres no hagan echo
 }
 
 %%
-
 
 void errorEnScanner(char* definicionDelError, char * variable){
 	printf("\n\n\n\t%s %s \n", definicionDelError, variable);
