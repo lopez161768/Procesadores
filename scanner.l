@@ -18,7 +18,7 @@
 %}
 
 
- // CUIDADO CON EL = TENEMOS QUE TENER UNO DE CREACIÓN DE TIPO
+
 
 falsoDR	(?i:falso)
 constDR (?i:const)
