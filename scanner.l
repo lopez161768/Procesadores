@@ -18,12 +18,6 @@
 %}
 
 
- // COSAS QUE HAY QUE AÑADIR
- // para enteros y reales modificaarlo para que no pete cuando metes un numero muy grande --> que aparezca e
- // Letras minúsculas
- // Caracteres especiales / () [] {}   <> ^
- // espacio en blanco, tabuladores y salto de línea
-
  // CUIDADO CON EL = TENEMOS QUE TENER UNO DE CREACIÓN DE TIPO
 
 falsoDR	(?i:falso)
@@ -74,6 +68,8 @@ igualDR	=
 literalCaracterDR	\".\"
 literalCadenaDR	'([^']|\/')*'
 
+comentarioDR	\{([^\}]|\/\})*\}
+
 literalEnteroDR	[+-]?[0-9]+
 literalRealDR	{literalEnteroDR}[rR]|[+-]?[0-9]+\.[0-9]+([eE][+-]?[0-9]+)?
 
@@ -84,19 +80,22 @@ identificadorDR     {letraDR}{letra_o_cifraDR}*
 
 puntoYComaDR	;
 dosPuntosDR :
+asignacionDR	:=
 puntoDR	\.
+subrangoDR	\.\.
 comaDR \,
 barraDR	\/
-operadorDistintoDR	"<>"
-siNoDR	"[]"
-operadorMayorIgualDR	">="
-operadorMenorIgualDR	"<="
-operadorMenorDR	"<"
-operadorMayorDR	">"
-corcheteAbiertoDR	"["
-corcheteCerradoDR	"]"
-parentesisAbiertoDR	"("
-parentesisCerradoDR	")"
+operadorDistintoDR	<>
+siNoDR	\[\]
+operadorMayorIgualDR	>=
+operadorMenorIgualDR	<=
+operadorMenorDR	<
+operadorMayorDR	>
+entoncesDR	->
+corcheteAbiertoDR	\[
+corcheteCerradoDR	\]
+parentesisAbiertoDR	\(
+parentesisCerradoDR	\)
 
 %%
 
@@ -180,12 +179,19 @@ parentesisCerradoDR	")"
 	printf("(nombreConstanteTK, %s)\n", yytext);
 }
 
+{comentarioDR}	{
+	printf("(comentarioTK, %.*s)\n", yyleng - 2, yytext + 1);
+}
+
+
 {identificadorDR} { printf("(identificadorTK, %s)\n", yytext); }
 
 
 {puntoYComaDR}	{	printf("(puntoYComaTK, )\n");	}
 {dosPuntosDR}   {    printf("(dosPuntosTK, )\n");	}
+{asignacionDR}	{	printf("(asignacionTK, )\n");	}
 {puntoDR}   {    printf("(puntoTK, )\n");	}
+{subrangoDR}	{	printf("(subrangoTK, )\n");	}
 {comaDR}	{	printf("(comaTK, )\n");	}
 {barraDR}	{	printf("(barraTK, )\n");	}
 
@@ -193,6 +199,7 @@ parentesisCerradoDR	")"
 {siNoDR}    { printf("(siNoTK, )\n"); }
 {operadorMayorIgualDR}    { printf("(operadorMayorIgualTK, )\n"); }
 {operadorMenorIgualDR}    { printf("(operadorMenorIgualTK, )\n"); }
+{entoncesDR}	{	printf("(entoncesTK, )\n");	}
 
 {operadorMenorDR}     { printf("(operadorMenorTK, )\n"); }
 {operadorMayorDR}     { printf("(operadorMayorTK, )\n"); }
@@ -201,7 +208,7 @@ parentesisCerradoDR	")"
 {parentesisAbiertoDR}     { printf("(parentesisAbiertoTK, )\n"); }
 {parentesisCerradoDR}     { printf("(parentesisCerradoTK, )\n"); }
 
-[ \t\n\r]+             /* Ignorar espacios en blanco, tabuladores y saltos de línea */ ;
+[ \t\n\r]+            //Ignorar espacios en blanco, tabuladores y saltos de línea
 
 .	{ //Permite que el resto de caracteres no hagan echo
 }
@@ -211,4 +218,25 @@ parentesisCerradoDR	")"
 void errorEnScanner(char* definicionDelError, char * variable){
 	printf("\n\n\n\t%s %s \n", definicionDelError, variable);
 	exit(EXIT_FAILURE);
+}
+
+
+int main(int argc, char *argv[]){
+	if (argc > 1){
+		FILE *archivo = fopen(argv[1], "r");
+
+		if (!archivo) {
+            perror("Error al abrir el archivo de entrada");
+            return 1;
+        }
+
+        yyin = archivo;
+	}
+
+	yylex();
+
+	if (argc > 1) {
+		fclose(yyin);
+	}
+	return 0;
 }
