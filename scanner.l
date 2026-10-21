@@ -3,7 +3,7 @@
  // Si es token multivaluado muestra su valor
  //Autor: Saray Lopez y Diana Manevska
  //Fecha: 28/9/2026
- //Version: 0.0.1
+ //Version: 0.0.4
 
 
 
@@ -70,8 +70,9 @@ literalCadenaDR	'([^']|\/')*'
 
 comentarioDR	\{([^\}]|\/\})*\}
 
-literalEnteroDR	[+-]?[0-9]+
-literalRealDR	{literalEnteroDR}[rR]|[+-]?[0-9]+\.[0-9]+([eE][+-]?[0-9]+)?
+exponenteDR	[eE][+-]?[0-9]+
+literalEnteroDR	[+-]?[0-9]+({exponenteDR})?
+literalRealDR	({literalEnteroDR}[rR]|[+-]?[0-9]+(\.[0-9]+))?({exponenteDR})?
 
 letraDR             [a-zA-Z]
 cifraDR             [0-9]
@@ -143,13 +144,12 @@ parentesisCerradoDR	\)
 {yDR}	{	printf("(yTK, )\n");	}
 
 
-{igualDR}	{
-	printf("(igualTK, )\n");
-}
+{igualDR}	{	printf("(igualTK, )\n");	}
 
 -	{	printf("(guionTK, )\n");	}
 \+	{	printf("(operadorSumaTK, )\n");	}
 "*"	{	printf("(operadorProductoTK, )\n");	}
+
 
 {literalCadenaDR}	{
 	printf("(literalCadenaTK, %.*s)\n", yyleng - 2, yytext + 1);
@@ -158,19 +158,29 @@ parentesisCerradoDR	\)
 {literalCaracterDR}	{
 	printf("(literalCaracterTK, %c)\n", yytext[1]);
 }
-{literalEnteroDR}	{
-	printf("(literalEnteroTK, %lld)\n", atoll(yytext));
+
+{literalEnteroDR} {
+	if (strchr(yytext, 'e') != NULL || strchr(yytext, 'E') != NULL) {
+		printf("(literalEnteroTK, %.8g)\n", strtod(yytext, NULL));
+    }
+	else {
+		printf("(literalEnteroTK, %lld)\n", atoll(yytext));
+    }
 }
+
 {literalRealDR}	{
 	if (yytext[yyleng-1] == 'r' || yytext[yyleng-1] == 'R') {
         char * cadena;
-        if ((cadena = strndup(yytext, yyleng - 1)) == NULL)
+        if ((cadena = strndup(yytext, yyleng - 1)) == NULL) {
             errorEnScanner("No hay memoria para strndup() al leer %s\n", yytext);
+		}
+
         else {
             printf("(literalRealTK, %f)\n", atof(cadena));
             free(cadena);
         }
-    } else {
+    }
+    else {
         printf("(literalRealTK, %f)\n", atof(yytext));
     }
 }
@@ -179,9 +189,7 @@ parentesisCerradoDR	\)
 	printf("(nombreConstanteTK, %s)\n", yytext);
 }
 
-{comentarioDR}	{
-	printf("(comentarioTK, %.*s)\n", yyleng - 2, yytext + 1);
-}
+{comentarioDR}	{	printf("(comentarioTK, %.*s)\n", yyleng - 2, yytext + 1);	}
 
 
 {identificadorDR} { printf("(identificadorTK, %s)\n", yytext); }
@@ -221,6 +229,7 @@ void errorEnScanner(char* definicionDelError, char * variable){
 }
 
 
+// main para leer ficheros .alg
 int main(int argc, char *argv[]){
 	if (argc > 1){
 		FILE *archivo = fopen(argv[1], "r");
@@ -238,5 +247,7 @@ int main(int argc, char *argv[]){
 	if (argc > 1) {
 		fclose(yyin);
 	}
+
 	return 0;
 }
+
