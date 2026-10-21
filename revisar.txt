@@ -1,0 +1,28 @@
+CAMBIOS EN scanner.l
+
+Obligatorios
+1. literalRealDR: sustituidlo para que e2 o E10 no salgan como reales:
+   literalRealDR  ({literalEnteroDR}[rR])|([+-]?[0-9]+\.[0-9]+({exponenteDR})?)
+2. Constantes solo con mayúsculas (4.1.3): cambiad [A-Z][A-Z_]* por [A-Z]+. Mantened el orden de las reglas: reservadas, luego constantes, luego {identificadorDR}.
+
+Decidir
+3. "_" en identificadores: dejarlo ([a-zA-Z0-9_]) o quitarlo ([a-zA-Z0-9], como dice 3.3.3). Si lo quitáis, mi_var ya no sería un solo identificador.
+
+PRUEBAS
+
+4. Probar programa2.alg (el del bucle con N = 5).
+5. Hacer un fichero de prueba con "e2 E10 i+1 i + 1 3.5 3r 2e3" y comprobar que, tras corregir el punto 1, e2 y E10 salen como identificadorTK.
+6. Pasar los 3 ejemplos del enunciado, escribiendo los signos con espacios (i + 1, m - i - 1).
+
+FICHERO DE TEXTO DE LA ENTREGA
+
+7. Nombres de los componentes del grupo.
+8. Decisiones tomadas:
+   - Los literales numéricos llevan signo, así que + y - binarios deben ir separados del número por un espacio.
+   - Los nombres de constantes son solo letras mayúsculas, sin cifras. Cualquier palabra íntegramente en mayúsculas se toma por constante y no puede ser variable ni tipo.
+   - Qué hacéis con el "_".
+   - Nombres de token que habéis elegido (guionTK, barraTK, etc.).
+
+FICHEROS A ENTREGAR
+
+9. scanner.l, uno o varios programaX.alg y un makefile (deseable).
