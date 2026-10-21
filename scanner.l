@@ -72,7 +72,7 @@ comentarioDR	\{([^\}]|\/\})*\}
 
 exponenteDR	[eE][+-]?[0-9]+
 literalEnteroDR	[+-]?[0-9]+({exponenteDR})?
-literalRealDR	({literalEnteroDR}[rR]|[+-]?[0-9]+(\.[0-9]+))?({exponenteDR})?
+literalRealDR	({literalEnteroDR}[rR]|([+-]?[0-9]+.[0-9]{exponenteDR})?)
 
 letraDR             [a-zA-Z]
 cifraDR             [0-9]
