@@ -1,2 +1,7 @@
 Lopez Moriano, Saray
 Manevska Avaleva, Diana
+
+Los literales enteros y reales pueden llevar signo, esto hace que cuando aparezca + o - seguido de un literal
+lo detecte como literal con signo. Si queremos que el + o - se detecten como operadores deben ir separados 
+con un espacio. Ejemplo: i + 1 se detecta el + lo detecta como el operador de la suma pero si tenemos i+1 lo 
+detecta como un literal entero con signo +1.

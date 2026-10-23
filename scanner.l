@@ -72,11 +72,11 @@ comentarioDR	\{([^\}]|\/\})*\}
 
 exponenteDR	[eE][+-]?[0-9]+
 literalEnteroDR	[+-]?[0-9]+({exponenteDR})?
-literalRealDR	({literalEnteroDR}[rR]|([+-]?[0-9]+.[0-9]{exponenteDR})?)
+literalRealDR	({literalEnteroDR}[rR])|([+-]?[0-9]+\.[0-9]+({exponenteDR})?)
 
 letraDR             [a-zA-Z]
 cifraDR             [0-9]
-letra_o_cifraDR     [a-zA-Z0-9_]
+letra_o_cifraDR     [a-zA-Z0-9]
 identificadorDR     {letraDR}{letra_o_cifraDR}*
 
 puntoYComaDR	;
@@ -185,7 +185,7 @@ parentesisCerradoDR	\)
     }
 }
 
-[A-Z][A-Z_]*	{
+[A-Z]+	{
 	printf("(nombreConstanteTK, %s)\n", yytext);
 }
 
