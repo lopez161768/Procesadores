@@ -27,7 +27,7 @@
 
  // Tokens multivaluados (el scanner debe rellenar yylval.<campo>)
 %token <literal> literalTK
-%token <cadena> nombreCteTK
+//%token <cadena> nombreCteTK
 %token <cadena> identificadorTK
 
 // palabras reservadas
@@ -101,25 +101,34 @@
 
 
  //PARTE 2.3: Definiciones (algunas innecesarias) de prioridades --> de MNEOR a MAYOR
-
+/*
 %nonassoc constTK //hago no asociativo y de baja prioridad a constTK
 %right fconstTK //hago fcosntTK es mas prioritario que constTK y asociativo a derecha
 %left puntoYComaTK //Hago muy prioritario y asociativo a izquierdas al ;
+*/
+// ponemos las que ya conocemos
+%left operadorSumaTK
+%left operadorRestaTK
+%left operadorProductoTK
+%left operadorDivisionTK
+%left parentesisAbiertoTK
+%left parentesisCerradoTK
+%left puntoYComaTK
+%left comaTK
+%left puntoTK
+%right igualTK
 
  //PARTE 2.3: Creamos el union necesario para valores de flex y traducciones de bison
 
-%union{
-	char* cadena;
-	LiteralT literal;
-	int entero;
-}
 
  //PARTE 2.4: Asignacion de traducciones a las variables
 
-%type <entero> listaDeclConstantesV  //para contar las que se definen
+
+
+// GRAMÁTICA DEL ALGORITMO
 
 %%
-// GRAMÁTICA DEL ALGORITMO
+
 
 desc_algoritmo: algoritmoTK identificadorTK puntoYComaTK cabecera_alg bloque_alg falgoritmoTK puntoTK { }
 	;
@@ -164,11 +173,9 @@ lista_d_tipo: identificadorTK igualTK d_tipo puntoYComaTK lista_d_tipo   { }
 	| { }
 	;
 
-// HAY 2 D_TIPO !!!!!!!
 d_tipo: tuplaTK lista_campos ftuplaTK { }
-	| tablaTK corcheteAbiertoTK expresion_t puntoTK puntoTK expresion_t corcheteCerradoTK deTK d_tipo { }
-	;
-d_tipo: identificadorTK { }
+	| tablaTK corcheteAbiertoTK expresion_t subrangoTK expresion_t corcheteCerradoTK deTK d_tipo { }
+	| identificadorTK { }
 	| expresion_t puntoTK puntoTK expresion_t { }
 	| refTK d_tipo { }
 	| tipo_base { }
@@ -219,15 +226,12 @@ expresion: exp_a { }
 	| funcion_ll { }
 	;
 
-// HAY 2 QUÉ HACEMOS ?????
 exp_a: exp_a operadorSumaTK exp_a { }
 	| exp_a operadorRestaTK exp_a { }
 	| exp_a operadorProductoTK exp_a { }
 	| exp_a operadorDivisionTK exp_a { }
 	| exp_a modTK exp_a { }
-	;
-
-exp_a: exp_a divTK exp_a { }
+	| exp_a divTK exp_a { }
 	| parentesisAbiertoTK exp_a parentesisCerradoTK { }
 	| operando { }
 	| realTK { }
@@ -240,10 +244,16 @@ exp_b: exp_b yTK exp_b { }
 	| noTK exp_b  { }
 	| operando { }
 	| literalTK { }
-	;
-// qué signifiac oprel???????????????????
-exp_b: expresion oprel expresion { }
+	| expresion oprel expresion { }
 	| parentesisAbiertoTK exp_b  parentesisCerradoTK { }
+	;
+
+oprel: operadorMenorTK { }
+	| operadorMayorTK { }
+	| igualTK { }
+	| operadorDistintoTK { }
+	| operadorMayorIgualTK { }
+	| operadorMenorIgualTK { }
 	;
 
 operando: identificadorTK { }
@@ -317,8 +327,9 @@ l_ll: expresion comaTK l_ll { }
 	;
 
 
-
 %%
+
+
 int main(int argc, char **argv){
 	#if defined YYDEBUG
 	yydebug=1;
