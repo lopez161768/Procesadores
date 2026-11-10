@@ -1,0 +1,7 @@
+
+
+para ejecutar sobre bison:
+    bison -d -v -t parser.y
+
+para ejecutar sobre un .alg:
+    modificar el scanner y usar el makefile
