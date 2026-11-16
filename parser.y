@@ -29,6 +29,7 @@
 %token <literal> literalTK
 //%token <cadena> nombreCteTK
 %token <cadena> identificadorTK
+%token <cadena> identificadorTK_b
 
 // palabras reservadas
 %token constTK
@@ -119,6 +120,11 @@
 %right igualTK
 
  //PARTE 2.3: Creamos el union necesario para valores de flex y traducciones de bison
+%union{
+	char* cadena;
+	LiteralT literal;
+	int entero;
+}
 
 
  //PARTE 2.4: Asignacion de traducciones a las variables
@@ -242,7 +248,7 @@ exp_a: exp_a operadorSumaTK exp_a { }
 exp_b: exp_b yTK exp_b { }
 	| exp_b oTK exp_b { }
 	| noTK exp_b  { }
-	| operando { }
+	| operando_b { }
 	| literalTK { }
 	| expresion oprel expresion { }
 	| parentesisAbiertoTK exp_b  parentesisCerradoTK { }
@@ -260,6 +266,9 @@ operando: identificadorTK { }
 	| operando puntoTK operando { }
 	| operando corcheteAbiertoTK expresion corcheteCerradoTK { }
 	| operando refTK { }
+	;
+
+operando_b: identificadorTK_b { }
 	;
 
 // INTRUCCIONES
