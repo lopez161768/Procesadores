@@ -5,3 +5,13 @@ para ejecutar sobre bison:
 
 para ejecutar sobre un .alg:
     modificar el scanner y usar el makefile
+
+
+
+bison -d -v -t parser.y          # genera parser.tab.c y parser.tab.h
+flex scanner.l                   # genera lex.yy.c
+gcc -c lex.yy.c                  # ¿el scanner entiende los tokens del parser?
+gcc -c parser.tab.c              # ¿el parser compila?
+gcc -c literal.c tablaDeConstantes.c
+gcc parser.tab.c lex.yy.o literal.o tablaDeConstantes.o -o compilador
+echo "algoritmo a;" | ./compilador
