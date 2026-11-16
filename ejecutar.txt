@@ -15,3 +15,14 @@ gcc -c parser.tab.c              # ¿el parser compila?
 gcc -c literal.c tablaDeConstantes.c
 gcc parser.tab.c lex.yy.o literal.o tablaDeConstantes.o -o compilador
 echo "algoritmo a;" | ./compilador
+
+
+bison -d -v -t parser.y
+parser.y: aviso: 41 conflictos desplazamiento/reducción [-Wconflicts-sr]
+parser.y: aviso: 22 conflictos reducción/reducción [-Wconflicts-rr]
+parser.y: note: rerun with option '-Wcounterexamples' to generate conflict counterexamples
+alumno@A33035:~/Escritorio/Parte2$ flex scanner.l
+scanner.l:284: Fin de archivo (EOF) encontrado dentro de una acción
+alumno@A33035:~/Escritorio/Parte2$ gcc -c lex.yy.c
+cc1: fatal error: lex.yy.c: No existe el archivo o el directorio
+compilation terminated.
